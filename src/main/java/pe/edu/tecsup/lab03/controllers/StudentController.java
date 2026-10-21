@@ -1,7 +1,4 @@
-package pe.edu.tecsup.lab03.controllers;
-
-import pe.edu.tecsup.lab03.entities.StudentEntity;
-import pe.edu.tecsup.lab03.services.StudentService;
+package com.example.student;
 
 import java.util.List;
 
@@ -14,8 +11,9 @@ public class StudentController {
     }
 
     public void mostrarBienvenida() {
-        System.out.println("Sistema de gestion de estudiantes");
-        System.out.println("Bienvenido al sistema.");
+        System.out.println("================================");
+        System.out.println("  SISTEMA DE ESTUDIANTES");
+        System.out.println("================================");
     }
 
     public void registrarEstudiante(int id, String name, String email) {
@@ -26,6 +24,13 @@ public class StudentController {
     public void listarEstudiantes() {
         List<StudentEntity> students = service.getAllStudents();
 
+        if (students.isEmpty()) {
+            System.out.println("No hay estudiantes registrados.");
+            return;
+        }
+
+        System.out.println("\n--- LISTA DE ESTUDIANTES ---");
+
         for (StudentEntity student : students) {
             System.out.println(
                     "ID: " + student.getId()
@@ -33,6 +38,22 @@ public class StudentController {
                             + " | Correo: " + student.getEmail()
             );
         }
+    }
+
+    public void buscarEstudiante(int id) {
+        List<StudentEntity> students = service.getAllStudents();
+
+        for (StudentEntity student : students) {
+            if (student.getId() == id) {
+                System.out.println("\n--- ESTUDIANTE ENCONTRADO ---");
+                System.out.println("ID: " + student.getId());
+                System.out.println("Nombre: " + student.getName());
+                System.out.println("Correo: " + student.getEmail());
+                return;
+            }
+        }
+
+        System.out.println("No se encontro un estudiante con ID " + id);
     }
 
 }
